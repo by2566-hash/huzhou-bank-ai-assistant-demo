@@ -542,3 +542,46 @@
 - The "risk" labels are product-demo labels, not a real fraud model score.
 - The official management, customer-service, dispute, and freeze actions remain demo-only to avoid simulating real banking operations.
 - Confirmed line counts before this audit update: `src/app.js` 846 lines, `src/data.js` 188 lines, `src/styles.css` 1181 lines, `docs/audit-log.md` 490 lines.
+
+## 2026-06-01 - Phase 11 Public Static Deployment
+
+**Phase:** Phase 11 - GitHub Pages 公网静态部署
+
+**Files changed:**
+- Modified `src/app.js`
+- Modified `src/styles.css`
+- Added `README.md`
+- Added `.nojekyll`
+- Modified `docs/audit-log.md`
+
+**Purpose:**
+- Make the prototype accessible through a public mobile-friendly link that can be shared directly.
+- Keep the deployment static and disconnected from any real bank system, API, backend, database, or AI service.
+- Add visible public-demo disclosure so external viewers understand the data and behavior are fictional.
+
+**Implementation decisions:**
+- Added a home-page disclosure: `演示原型 · 所有账户、交易、授权数据均为虚构 · 不连接真实银行系统`.
+- Added `README.md` with the same safety boundary: all data is fictional and the prototype performs no real banking actions.
+- Added `.nojekyll` so GitHub Pages serves the static files directly.
+- Initialized a new Git repository on branch `main`.
+- Created public GitHub repository: `by2566-hash/huzhou-bank-ai-assistant-demo`.
+- Enabled GitHub Pages from `main` branch root path `/`.
+
+**Deployment links:**
+- Repository: `https://github.com/by2566-hash/huzhou-bank-ai-assistant-demo`
+- Published demo: `https://by2566-hash.github.io/huzhou-bank-ai-assistant-demo/`
+- Immediate cache-busted link verified after first deployment: `https://by2566-hash.github.io/huzhou-bank-ai-assistant-demo/?v=1`
+
+**Verification:**
+- Ran `node --check src/app.js`, exited 0.
+- Ran `node --check src/data.js`, exited 0.
+- Ran a public-package scan for frontend network calls and secret indicators in `index.html`, `src`, and `README.md`; no matches found for `fetch(`, `XMLHttpRequest`, `axios`, `localStorage`, `sessionStorage`, `真实账号`, `真实银行卡`, `API key`, `token`, or `.env`.
+- Confirmed GitHub Pages build status was `built` for commit `39fdaeb799cb5fbf9e479e77d6d7dc6c5ceb6984`.
+- `curl -I https://by2566-hash.github.io/huzhou-bank-ai-assistant-demo/index.html` returned HTTP 200.
+- `curl -I 'https://by2566-hash.github.io/huzhou-bank-ai-assistant-demo/?v=1'` returned HTTP 200.
+- Browser verification opened the published link and confirmed title `湖州银行可信 AI 助手 Demo`, visible `湖州银行`, visible `小X 智能助手`, and visible fictional-data disclosure.
+
+**Residual risks / unknowns:**
+- GitHub Pages is public. Anyone with the link can view the demo and repository.
+- The root URL briefly returned a cached 404 immediately after publishing; the cache-busted URL and `index.html` were verified as live. The root URL should normalize after GitHub CDN cache refresh.
+- This deployment is appropriate for product demo sharing, not for confidential bank data, real authentication, or production banking workflows.
