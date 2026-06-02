@@ -328,8 +328,9 @@ function renderSheet() {
 
   if (state.sheet === "verify") {
     return `
-      <div class="sheet-backdrop">
-        <section class="bottom-sheet">
+      <div class="sheet-backdrop verify-backdrop">
+        <section class="bottom-sheet verify-sheet">
+          <div class="verify-icon" aria-hidden="true">Face ID</div>
           <h2>需要验证身份</h2>
           <p>为保护账户安全，请完成验证。</p>
           <button class="primary" data-action="verify">Mock Face ID 验证</button>

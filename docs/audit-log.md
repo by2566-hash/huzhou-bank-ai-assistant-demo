@@ -585,3 +585,56 @@
 - GitHub Pages is public. Anyone with the link can view the demo and repository.
 - The root URL briefly returned a cached 404 immediately after publishing; the cache-busted URL and `index.html` were verified as live. The root URL should normalize after GitHub CDN cache refresh.
 - This deployment is appropriate for product demo sharing, not for confidential bank data, real authentication, or production banking workflows.
+
+## 2026-06-01 - Phase 12 Apple-Inspired UI Polish
+
+**Phase:** Phase 12 - Apple-inspired 顶部 AI、对话卡片与弹窗质感优化
+
+**Files changed:**
+- Modified `src/app.js`
+- Modified `src/styles.css`
+- Modified `docs/audit-log.md`
+
+**Purpose:**
+- Improve the demo's perceived design quality and conversation experience using Apple-inspired interaction principles without changing the established Huzhou Bank background or connecting to any real data.
+- Keep the design polished and mobile-first while preserving the existing domestic banking product logic, safety gates, and fictional-data boundary.
+
+**Design boundaries:**
+- Did not change the existing app/page background or the Huzhou Bank home visual direction.
+- Did not introduce Figma-specific assets because no Figma URL or selected node was provided.
+- Did not add new dependencies, icon libraries, runtime services, backend code, or AI APIs.
+- Treated the referenced `figma-implement-design` workflow as design-implementation discipline rather than 1:1 Figma translation.
+
+**Design decisions implemented:**
+- Added iOS-style design tokens for system blue, separators, translucent fill, and softer shadows.
+- Updated the top AI search entry into a more glass-like capsule with blur, rounded shape, and a compact voice chip.
+- Updated the assistant header to a translucent bar with iOS-style blue navigation/feedback actions.
+- Updated the conversation user bubble to use an iOS-style blue bubble shape while preserving the bank assistant content model.
+- Updated intent-summary and result cards with lighter translucent surfaces, subtle shadows, and grouped-list-style separators.
+- Updated action buttons, trust-line details, and copy controls to use iOS-style blue action emphasis.
+- Updated bottom sheets to feel more like action sheets with blurred backdrop, softer elevated surface, and clearer handles.
+- Changed identity verification from a bottom sheet to a focused centered modal with a Face ID visual marker.
+- Kept cards at the project's established 8px radius where they are content cards; pill/capsule controls use rounded shapes intentionally.
+
+**Verification:**
+- Ran `node --check src/app.js`, exited 0.
+- Ran `node --check src/data.js`, exited 0.
+- Ran a public-package scan for frontend network calls and secret indicators in `index.html`, `src`, and `README.md`; no matches found for `fetch(`, `XMLHttpRequest`, `axios`, `localStorage`, `sessionStorage`, `真实账号`, `真实银行卡`, `API key`, `token`, or `.env`.
+- Ran a Node VM behavior test confirming:
+  - `卡号和开户行` still renders the intent summary.
+  - Card number remains masked and has no copy action before reveal.
+  - The new verification modal includes the Face ID visual marker.
+  - Full card number and copy action appear only after reveal state.
+- Browser verification on `http://localhost:4176` confirmed:
+  - Home page still loads the Huzhou Bank context and fictional-data disclosure.
+  - Assistant page exposes feedback, voice input, text input, plus button, and grid menu.
+  - Text input focus exposes the send button.
+  - `卡号和开户行` flow reaches card selection, the centered verification modal, and the result card after verification.
+  - The `+` attachment sheet exposes album/photo/emoji entries.
+  - The grid menu exposes the common assistant capabilities.
+
+**Residual risks / unknowns:**
+- Browser screenshot capture timed out in the automation runtime, so this phase used DOM/click-flow browser checks rather than screenshot comparison.
+- The UI is Apple-inspired, not an official Apple or Figma implementation.
+- The public GitHub Pages deployment still needs a new push/build after this phase before the hosted link reflects these visual changes.
+- Confirmed line counts before this audit update: `src/app.js` 851 lines, `src/data.js` 188 lines, `src/styles.css` 1274 lines, `docs/audit-log.md` 587 lines.
